@@ -2,13 +2,18 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 
-Lx_pos = 3
-Lx_neg = 2.5
+test_number = int(input())
 
-Ly_pos = 2
+colored = False
+
+Lx_pos = 1.3
+Lx_neg = 2.2
+
+Ly_pos = 1.5
 Ly_neg = 1.5
 
 nx_per_unit = 1000
+tmax = 1000
 
 Lx = Lx_pos + Lx_neg
 Ly = Ly_pos + Ly_neg
@@ -44,7 +49,8 @@ ny_divisions = len(Ly_neg_limits)
 
 n_images = nx_divisions*ny_divisions
 
-print(n_images)
+resollution = (Lx_pos_limits-Lx_neg_limits)*nx_per_unit
+
 
 # plt.figure(figsize=(10,10))
 for i in range(nx_divisions):
@@ -58,3 +64,12 @@ for i in range(ny_divisions):
 plt.axis('equal')
 plt.savefig('divisions.png', bbox_inches='tight', pad_inches=0.1)
 plt.close()
+
+
+with open("config.txt","w") as f:
+    f.write(f"{test_number} {colored}\n")
+    f.write(f"{n_images} {nx_divisions} {ny_divisions}\n")
+    f.write(f"{tmax}\n")
+    for j in range(ny_divisions):
+        for i in range(nx_divisions):    
+            f.write(f"{Lx_neg_limits[i]} {Lx_pos_limits[i]} {Ly_neg_limits[j]} {Ly_pos_limits[j]} {int(resollution[i])}\n")
